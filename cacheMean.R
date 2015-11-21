@@ -17,16 +17,28 @@
 ##      4. get the value of the mean of the vector
 ## -------------------------------------------------------------------- ##
 makeVector <- function(x = numeric()) {
-    m <- NULL
-    # set the value of the vector
+    #initial the local mean to NULL
+    cachedMean <- NULL
+    
+    # cache the vector
     set <- function(y) {
         x <<- y
-        m <<- NULL
+        cachedMean <<- NULL
     }
-    # get the value of the vector
-    get <- function() x
-    setmean <- function(mean) m <<- mean
-    getmean <- function() m
+    
+    # return the cached vector
+    get <- function(){
+        x
+    }
+    
+    setmean <- function(mean){ 
+        cachedMean <<- mean
+    }
+    
+    getmean <- function(){
+        cachedMean
+    }
+    
     list(set = set, get = get,
          setmean = setmean,
          getmean = getmean)
@@ -34,18 +46,21 @@ makeVector <- function(x = numeric()) {
 
 cachemean <- function(x, ...) {
     # call getmean using the object x 
-    # if x exists then return that value
-    m <- x$getmean()
-    if(!is.null(m)) {
-        message("getting cached data")
-        return(m)
+    # if x exists then we've already calculated it's mean -- 
+    # return the calculated mean -- done as the last line of the function
+    cachedMean <- x$getmean()
+    if(!is.null(cachedMean)) {
+        message("getting cached Mean")
     }
-    #The mean of x did not exist so get x
-    data <- x$get()
-    #calculate the mean
-    m <- mean(data, ...)
-    #save x (with it's mean)
-    x$setmean(m)
+    else{
+        #The mean of x did not exist so get x, which is a new vector
+        nVector <- x$get()
+        #calculate the mean on the new Vector
+        cachedMean <- mean(nVector, ...)
+        #cache x (with it's mean)
+        x$setmean(cachedMean)
+        message("mean not cached: Calculated and saved")
+    }
     #return the mean
-    m
+    cachedMean
 }
