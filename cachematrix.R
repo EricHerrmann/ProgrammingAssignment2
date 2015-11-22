@@ -18,7 +18,9 @@ makeCacheMatrix <- function(x = matrix()) {
     
     # set the value of the matrix
     set <- function(y) {
+        #asigns the object y to x where x is from the parent environment
         x <<- y
+        # sets cachedInverse to null in the parent environment. -- clears the cache
         cachedInverse <<- NULL
     }
     #NOTE:  It is possible to write the get/set functions on a single line, but I find that 

@@ -22,7 +22,9 @@ makeVector <- function(x = numeric()) {
     
     # cache the vector
     set <- function(y) {
+        #asigns the object y to x where x is from the parent environment
         x <<- y
+        # sets cachedMean from the parent environment to NULL -- clears the parent
         cachedMean <<- NULL
     }
     
@@ -32,6 +34,7 @@ makeVector <- function(x = numeric()) {
     }
     
     setmean <- function(mean){ 
+        # sets cachedMean from the parent environment to mean 
         cachedMean <<- mean
     }
     
