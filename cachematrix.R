@@ -68,7 +68,7 @@ cacheSolve <- function(x, ...) {
         nMatrix <- x$get()
         #calculate the inverse of the new Matrix (nMatrix)
         cachedInverse <- solve(nMatrix, ...)
-        #save x (with it's mean)
+        #save x (with it's inverse)
         x$setInverse(cachedInverse)
         message("inverse not cached: solved and saved")
     }
